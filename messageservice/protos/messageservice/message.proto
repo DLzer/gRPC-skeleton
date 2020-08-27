@@ -1,10 +1,14 @@
 syntax = "proto3";
-package message;
+
+package protos.message;
+
+option go_package = ".;messageserivce";
 
 message Message {
   string body = 1;
 }
 
+//protoc --go_out=plugins=grpc: message.proto 
 service MessageService {
   rpc SayHello(Message) returns (Message) {}
 }
