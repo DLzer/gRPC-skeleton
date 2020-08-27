@@ -4,10 +4,10 @@ import (
 	"log"
 	"net"
 
-	"github.com/dlzer/gRPC-skeleton/messageservice/cmd/messageservice"
+	"github.com/dlzer/gRPC-skeleton/messageservice/cmd"
 	"github.com/dlzer/gRPC-skeleton/messageservice/config"
-	"github.com/dlzer/gRPC-skeleton/messageservice/models"
-	pb "github.com/golang-friends/slack-clone/authservice/protos/authservice"
+	// "github.com/dlzer/gRPC-skeleton/messageservice/models"
+	pb "github.com/dlzer/gRPC-skeleton/messageservice/protos/messageservice"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -22,11 +22,11 @@ func main() {
 		log.Fatal("Config file error: ", err)
 	}
 
-	models.ConnectToDB(config)
-	log.Println("Connected to Database")
+	// models.ConnectToDB(config)
+	// log.Println("Connected to Database")
 
 	server := grpc.NewServer()
-	pb.RegisterAuthServiceServer(server, &authservice.AuthServer{})
+	pb.RegisterMessageServiceServer(server, &messageservice.MessageServer{})
 
 	// reflection - advertises gRPC services
 	reflection.Register(server)
@@ -38,6 +38,6 @@ func main() {
 	}
 
 	// starts gRPC server
-	log.Printf("gRPC server hosted on %s", config.ListenInterface)
+	log.Printf("gRPC listening on %s", config.ListenInterface)
 	server.Serve(listener)
 }
