@@ -4,18 +4,40 @@ import (
 	"log"
 	"net"
 
+	"github.com/dlzer/gRPC-skeleton/messageservice/cmd/messageservice"
+	"github.com/dlzer/gRPC-skeleton/messageservice/config"
+	"github.com/dlzer/gRPC-skeleton/messageservice/models"
+	pb "github.com/golang-friends/slack-clone/authservice/protos/authservice"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	lis, err := net.Listen("tcp", ":9000")
+
+	log.Println("Starting Server...")
+
+	// open config file and apply it to the configuration strcut
+	config, err := configs.ConfigFromFile("config.json")
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		log.Fatal("Config file error: ", err)
 	}
 
-	grpcServer := grpc.NewServer()
+	models.ConnectToDB(config)
+	log.Println("Connected to Database")
 
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %s", err)
+	server := grpc.NewServer()
+	pb.RegisterAuthServiceServer(server, &authservice.AuthServer{})
+
+	// reflection - advertises gRPC services
+	reflection.Register(server)
+
+	// creates gRPC listener
+	listener, err := net.Listen("tcp", config.ListenInterface)
+	if err != nil {
+		log.Fatal("Error creating listener: ", err.Error())
 	}
+
+	// starts gRPC server
+	log.Printf("gRPC server hosted on %s", config.ListenInterface)
+	server.Serve(listener)
 }
