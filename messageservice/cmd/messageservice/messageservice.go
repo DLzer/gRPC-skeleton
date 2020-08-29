@@ -2,12 +2,19 @@ package messageservice
 
 import (
 	"context"
+	"github.com/dlzer/gRPC-skeleton/messageservice/config"
 	pb "github.com/dlzer/gRPC-skeleton/messageservice/protos/messageservice"
 	"log"
 )
 
 // MessageServer is the abstraction of the gRPC server
 type MessageServer struct {
+	config configs.Configuration
+}
+
+// NewMessageServer is AuthServerFactory
+func NewMessageServer(config configs.Configuration) *MessageServer {
+	return &MessageServer{config}
 }
 
 // Message uses the MessageServer abstraction and the protocol buffer to pass the message

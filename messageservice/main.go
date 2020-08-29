@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/dlzer/gRPC-skeleton/messageservice/cmd"
+	"github.com/dlzer/gRPC-skeleton/messageservice/cmd/messageservice"
 	"github.com/dlzer/gRPC-skeleton/messageservice/config"
 	// "github.com/dlzer/gRPC-skeleton/messageservice/models"
 	pb "github.com/dlzer/gRPC-skeleton/messageservice/protos/messageservice"
@@ -26,7 +26,7 @@ func main() {
 	// log.Println("Connected to Database")
 
 	server := grpc.NewServer()
-	pb.RegisterMessageServiceServer(server, &messageservice.MessageServer{})
+	pb.RegisterMessageServiceServer(server, messageservice.NewMessageServer(config))
 
 	// reflection - advertises gRPC services
 	reflection.Register(server)
