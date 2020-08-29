@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: authservice
+        working-directory: messageservice
         
     steps:
     - name: Set up Go 1.x
