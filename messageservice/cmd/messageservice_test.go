@@ -17,4 +17,18 @@ func Test_Message_Service(t *testing.T) {
 		t.Error("1. Server responded with an error: ", err.Error())
 	}
 
+	// Test Case: Response from the server
+	res, err := server.Message(context.Background(), &pb.Message{Body: "Hello"})
+
+	want := "Hello From the Server!"
+
+	if res.GetBody() != "" {
+		got := res.GetBody()
+		if got != want {
+			t.Errorf("2. Body does not match requested. Got %q wanted %q", got, want)
+		}
+	} else {
+		t.Error("3. Message body is blank")
+	}
+
 }
