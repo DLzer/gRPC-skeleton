@@ -29,7 +29,7 @@ jobs:
 
     - run: go mod download
     - run: go get -u golang.org/x/lint/golint && golint ./...
-    - run: go test -v ./...name: AuthService Check
+    - run: go test -v ./...name: MessageService Check
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: authservice
+        working-directory: messageservice
         
     steps:
     - name: Set up Go 1.x
