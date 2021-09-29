@@ -2,9 +2,11 @@ package messageservice
 
 import (
 	"context"
-	"github.com/dlzer/gRPC-skeleton/messageservice/config"
-	pb "github.com/dlzer/gRPC-skeleton/messageservice/protos/messageservice"
 	"log"
+
+	configs "github.com/dlzer/gRPC-skeleton/messageservice/config"
+
+	pb "github.com/dlzer/gRPC-skeleton/messageservice/protos/messageservice"
 )
 
 // MessageServer is the abstraction of the gRPC server
@@ -18,7 +20,7 @@ func NewMessageServer(config configs.Configuration) *MessageServer {
 }
 
 // Message uses the MessageServer abstraction and the protocol buffer to pass the message
-func (as *MessageServer) Message(ctx context.Context, in *pb.Message) (*pb.Message, error) {
+func (as *MessageServer) SayHello(ctx context.Context, in *pb.Message) (*pb.Message, error) {
 	log.Printf("Receive message body from client: %s", in.Body)
 	return &pb.Message{Body: "Hello From the Server!"}, nil
 }

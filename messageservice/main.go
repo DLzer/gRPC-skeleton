@@ -5,8 +5,7 @@ import (
 	"net"
 
 	"github.com/dlzer/gRPC-skeleton/messageservice/cmd/messageservice"
-	"github.com/dlzer/gRPC-skeleton/messageservice/config"
-	// "github.com/dlzer/gRPC-skeleton/messageservice/models"
+	configs "github.com/dlzer/gRPC-skeleton/messageservice/config"
 	pb "github.com/dlzer/gRPC-skeleton/messageservice/protos/messageservice"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
